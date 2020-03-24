@@ -170,7 +170,8 @@ def cross_validate(estimator: Union[BaseEstimator, List[BaseEstimator]],
         if is_gbdt_instance(estimator[n], ('lgbm', 'cat', 'xgb')):
             if early_stopping:
                 if 'eval_set' not in fit_params_fold:
-                    fit_params_fold['eval_set'] = [(valid_x, valid_y)]
+                    fit_params_fold['eval_set'] = [(train_x, train_y), (valid_x, valid_y)]
+                    fit_params_fold['eval_names'] = ['train', 'valid']
                 if 'early_stopping_rounds' not in fit_params_fold:
                     fit_params_fold['early_stopping_rounds'] = 100
 
